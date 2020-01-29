@@ -14,7 +14,6 @@ var PIN = {
   MIN_Y: 130,
   MAX_Y: 630
 };
-var advertisment = [];
 
 var map = document.querySelector('.map');
 
@@ -35,11 +34,12 @@ var getRandomLengthArray = function (array) {
 };
 
 var generateAdsArray = function (adsQty) {
+  var advertisment = [];
   for (var i = 0; i < adsQty; i++) {
     var locationX = getRandomInteger(PIN.MIN_X, PIN.MAX_X);
     var locationY = getRandomInteger(PIN.MIN_Y, PIN.MAX_Y);
 
-    var ads = {
+    var ad = {
       author: {
         avatar: getAvatarSrc(i)
       },
@@ -63,9 +63,9 @@ var generateAdsArray = function (adsQty) {
         y: locationY
       }
     };
-
-    advertisment.push(ads);
+    advertisment.push(ad);
   }
+  return advertisment;
 };
 
 generateAdsArray(ADS_QTY);
