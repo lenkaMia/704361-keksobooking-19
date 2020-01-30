@@ -69,7 +69,7 @@ var generateAdsArray = function (adsQty) {
   return advertisment;
 };
 
-var renderPin = function (ad) {
+var createPin = function (ad) {
   var adElement = pinTemplate.cloneNode(true);
 
   adElement.style.left = (ad.location.x - 25) + 'px';
@@ -80,16 +80,16 @@ var renderPin = function (ad) {
   return adElement;
 };
 
-var createPins = function (array) {
+var renderPin = function (advertisments) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < array.length; i++) {
-    fragment.appendChild(renderPin(array[i]));
+  for (var i = 0; i < advertisments.length; i++) {
+    fragment.appendChild(createPin(advertisments[i]));
   }
 
   mapPins.appendChild(fragment);
 };
 
-createPins(generateAdsArray(ADS_QTY));
+renderPin(generateAdsArray(ADS_QTY));
 
 map.classList.remove('map--faded');
