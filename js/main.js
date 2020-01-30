@@ -8,12 +8,12 @@ var GUESTS = [0, 1, 2, 3];
 var TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var PIN = {
-  MIN_X: 0,
-  MAX_X: 1200,
-  MIN_Y: 130,
-  MAX_Y: 630
-};
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+var LOCATION_MIN_X = 0;
+var LOCATION_MAX_X = 1200;
+var LOCATION_MIN_Y = 130;
+var LOCATION_MAX_Y = 630;
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPins = map.querySelector('.map__pins');
@@ -37,8 +37,8 @@ var getRandomLengthArray = function (array) {
 var generateAdsArray = function (adsQty) {
   var advertisment = [];
   for (var i = 0; i < adsQty; i++) {
-    var locationX = getRandomInteger(PIN.MIN_X, PIN.MAX_X);
-    var locationY = getRandomInteger(PIN.MIN_Y, PIN.MAX_Y);
+    var locationX = getRandomInteger(LOCATION_MIN_X, LOCATION_MAX_X);
+    var locationY = getRandomInteger(LOCATION_MIN_Y, LOCATION_MAX_Y);
 
     var ad = {
       author: {
@@ -72,8 +72,8 @@ var generateAdsArray = function (adsQty) {
 var createPin = function (ad) {
   var adElement = pinTemplate.cloneNode(true);
 
-  adElement.style.left = (ad.location.x - 25) + 'px';
-  adElement.style.top = (ad.location.y - 70) + 'px';
+  adElement.style.left = (ad.location.x - PIN_WIDTH / 2) + 'px';
+  adElement.style.top = (ad.location.y - PIN_HEIGHT) + 'px';
   adElement.querySelector('img').src = ad.author.avatar;
   adElement.querySelector('img').alt = ad.offer.title;
 
