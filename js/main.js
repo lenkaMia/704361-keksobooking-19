@@ -80,7 +80,7 @@ var createPin = function (ad) {
   return adElement;
 };
 
-var renderPin = function (advertisments) {
+var renderPins = function (advertisments) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < advertisments.length; i++) {
@@ -90,6 +90,6 @@ var renderPin = function (advertisments) {
   mapPins.appendChild(fragment);
 };
 
-renderPin(generateAdsArray(ADS_QTY));
+renderPins(generateAdsArray(ADS_QTY));
 
 map.classList.remove('map--faded');
