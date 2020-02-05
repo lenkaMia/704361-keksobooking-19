@@ -141,20 +141,20 @@ var getTypes = function (ad) {
   }
 };
 
-var generateCard = function (card) {
+var generateCard = function (ads) {
   var cardElement = cardTemplate.cloneNode(true);
 
-  cardElement.querySelector('.popup__title').textContent = card.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = getTypes(card);
-  cardElement.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' комнаты для ' + card.offer.guests + ' гостей';
-  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
-  cardElement.querySelector('.popup__description').textContent = card.offer.description;
-  cardElement.querySelector('.popup__avatar').src = card.author.avatar;
+  cardElement.querySelector('.popup__title').textContent = ads.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = ads.offer.address;
+  cardElement.querySelector('.popup__text--price').textContent = ads.offer.price + '₽/ночь';
+  cardElement.querySelector('.popup__type').textContent = getTypes(ads);
+  cardElement.querySelector('.popup__text--capacity').textContent = ads.offer.rooms + ' комнаты для ' + ads.offer.guests + ' гостей';
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ads.offer.checkin + ', выезд до ' + ads.offer.checkout;
+  cardElement.querySelector('.popup__description').textContent = ads.offer.description;
+  cardElement.querySelector('.popup__avatar').src = ads.author.avatar;
 
-  generateFeatures(card.offer.features, cardElement);
-  generatePhotos(card.offer.photos, cardElement);
+  generateFeatures(ads.offer.features, cardElement);
+  generatePhotos(ads.offer.photos, cardElement);
 
   return cardElement;
 };
@@ -163,7 +163,8 @@ var renderCard = function (adsAmount) {
   mapFilters.insertAdjacentElement('beforebegin', generateCard(adsAmount));
 };
 
-renderPins(generateAdsArray(ADS_QTY));
-renderCard(ADS_QTY);
+var ads = generateAdsArray(ADS_QTY);
+renderPins(ads);
+renderCard(ads[0]);
 
 map.classList.remove('map--faded');
