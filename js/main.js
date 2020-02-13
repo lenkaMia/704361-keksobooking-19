@@ -18,7 +18,6 @@ var PIN_MAIN_WIDTH = 65;
 var PIN_MAIN_HEIGHT = 65;
 var pinMain = document.querySelector('.map__pin--main');
 var ENTER_KEY = 'Enter';
-var LEFT_BUTTON_MOUSE = 1;
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin')
     .content
@@ -180,17 +179,17 @@ var toggleDisabledElements = function (formElement) {
 };
 
 var getCoords = function () {
-  var x = map.classList.contains('map--faded') ? parseInt(pinMain.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2) : parseInt(pinMain.style.left, 10) + Math.round(PIN_WIDTH / 2);
-  var y = map.classList.contains('map--faded') ? parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT / 2) : parseInt(pinMain.style.top, 10) + Math.round(PIN_HEIGHT);
-
-  return x + ', ' + y;
+  return {
+    x: parseInt(pinMain.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2),
+    y: parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT / 2)
+  };
 };
 
-var setAddress = function () {
-  adFormAddress.value = getCoords();
+var setAddress = function (coords) {
+  adFormAddress.value = coords.x + coords.y;
 };
 
-var activateMap = function () {
+var activatePage = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
 
@@ -199,19 +198,18 @@ var activateMap = function () {
   renderCard(ads[0]);
   toggleDisabledElements(formElements);
   toggleDisabledElements(formMapElements);
-  setAddress();
+  setAddress(getCoords);
 };
 
-var onPinClick = function (evt) {
-  if (evt.which === LEFT_BUTTON_MOUSE) {
-    activateMap();
-  }
+var onPinClick = function () {
+  activatePage();
+
   mapPinMain.removeEventListener('mousedown', onPinClick);
 };
 
 var onPinEnterPress = function (evt) {
   if (evt.key === ENTER_KEY) {
-    activateMap();
+    activatePage();
   }
   mapPinMain.removeEventListener('keydown', onPinEnterPress);
 };
