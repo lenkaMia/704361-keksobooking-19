@@ -186,7 +186,7 @@ var getCoords = function () {
 };
 
 var setAddress = function (coords) {
-  adFormAddress.value = coords.x + coords.y;
+  adFormAddress.value = coords.x + ' , ' + coords.y;
 };
 
 var activatePage = function () {
@@ -216,7 +216,7 @@ var onPinEnterPress = function (evt) {
 
 toggleDisabledElements(formElements);
 toggleDisabledElements(formMapElements);
-setAddress();
+setAddress(getCoords);
 
 mapPinMain.addEventListener('mousedown', onPinClick);
 mapPinMain.addEventListener('keydown', onPinEnterPress);
