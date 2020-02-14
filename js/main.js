@@ -29,6 +29,9 @@ var mapPins = map.querySelector('.map__pins');
 var mapPinMain = mapPins.querySelector('.map__pin--main');
 var mapFilters = map.querySelector('.map__filters-container');
 var adForm = document.querySelector('.ad-form');
+var adSubmit = adForm.querySelector('.ad-form__submit');
+var roomsNumber = adForm.querySelector('#room_number');
+var capacityValue = adForm.querySelector('#capacity');
 var adFormAddress = adForm.querySelector('#address');
 var formElements = adForm.querySelectorAll('fieldset');
 var formMapElements = mapFilters.querySelectorAll('select, fieldset');
@@ -213,6 +216,29 @@ var onPinEnterPress = function (evt) {
   }
   mapPinMain.removeEventListener('keydown', onPinEnterPress);
 };
+
+function checkRoomsCapacity(rooms, capacity) {
+  if (rooms === '1' && capacity === '1') {
+    roomsNumber.setCustomValidity('');
+    return true;
+  } else if (rooms === '2' && (capacity < '3' && capacity > '0')) {
+    roomsNumber.setCustomValidity('');
+    return true;
+  } else if (rooms === '3' && (capacity <= '3' && capacity > '0')) {
+    roomsNumber.setCustomValidity('');
+    return true;
+  } else if (rooms === '100' && capacity === '0') {
+    roomsNumber.setCustomValidity('');
+    return true;
+  } else {
+    roomsNumber.setCustomValidity('Не верное количество комнат или гостей');
+    return false;
+  }
+}
+
+adSubmit.addEventListener('click', function () {
+  return checkRoomsCapacity(roomsNumber.value, capacityValue.value);
+});
 
 toggleDisabledElements(formElements);
 toggleDisabledElements(formMapElements);
