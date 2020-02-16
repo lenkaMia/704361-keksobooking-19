@@ -14,6 +14,10 @@ var LOCATION_MIN_X = 0;
 var LOCATION_MAX_X = 1200;
 var LOCATION_MIN_Y = 130;
 var LOCATION_MAX_Y = 630;
+var PIN_MAIN_WIDTH = 65;
+var PIN_MAIN_HEIGHT = 65;
+var pinMain = document.querySelector('.map__pin--main');
+var ENTER_KEY = 'Enter';
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin')
     .content
@@ -22,7 +26,18 @@ var cardTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
 var mapPins = map.querySelector('.map__pins');
+var mapPinMain = mapPins.querySelector('.map__pin--main');
 var mapFilters = map.querySelector('.map__filters-container');
+var adForm = document.querySelector('.ad-form');
+var adSubmit = adForm.querySelector('.ad-form__submit');
+var roomsNumber = adForm.querySelector('#room_number');
+var capacityValue = adForm.querySelector('#capacity');
+var adFormAddress = adForm.querySelector('#address');
+var formElements = adForm.querySelectorAll('fieldset');
+var formMapElements = mapFilters.querySelectorAll('select, fieldset');
+var housingTypes = adForm.querySelector('#type');
+var priceInput = adForm.querySelector('#price');
+
 
 var getAvatarSrc = function (index) {
   return 'img/avatars/user0' + (index + 1) + '.png';
@@ -141,6 +156,28 @@ var getTypes = function (ad) {
   }
 };
 
+var getMinPrice = function () {
+  var currenthousingType = housingTypes.value;
+  switch (currenthousingType) {
+    case 'palace':
+      priceInput.min = 10000;
+      priceInput.placeholder = 10000;
+      break;
+    case 'flat':
+      priceInput.min = 1000;
+      priceInput.placeholder = 1000;
+      break;
+    case 'bungalo':
+      priceInput.min = 0;
+      priceInput.placeholder = 0;
+      break;
+    case 'house':
+      priceInput.min = 5000;
+      priceInput.placeholder = 5000;
+      break;
+  }
+};
+
 var generateCard = function (ads) {
   var cardElement = cardTemplate.cloneNode(true);
 
@@ -163,8 +200,72 @@ var renderCard = function (adsAmount) {
   mapFilters.insertAdjacentElement('beforebegin', generateCard(adsAmount));
 };
 
-var ads = generateAdsArray(ADS_QTY);
-renderPins(ads);
-renderCard(ads[0]);
+var toggleDisabledElements = function (formElement) {
+  for (var i = 0; i < formElement.length; i++) {
+    formElement[i].disabled = !formElement[i].disabled;
+  }
+};
 
-map.classList.remove('map--faded');
+var getCoords = function () {
+  return {
+    x: parseInt(pinMain.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2),
+    y: map.classList.contains('map--faded') ? parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT / 2) : parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT)
+  };
+};
+
+var setAddress = function (coords) {
+  adFormAddress.value = coords.x + ' , ' + coords.y;
+};
+
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+
+  var ads = generateAdsArray(ADS_QTY);
+  renderPins(ads);
+  renderCard(ads[0]);
+  toggleDisabledElements(formElements);
+  toggleDisabledElements(formMapElements);
+  setAddress(getCoords());
+};
+
+var onPinClick = function () {
+  activatePage();
+
+  mapPinMain.removeEventListener('mousedown', onPinClick);
+};
+
+var onPinEnterPress = function (evt) {
+  if (evt.key === ENTER_KEY) {
+    activatePage();
+    mapPinMain.removeEventListener('keydown', onPinEnterPress);
+  }
+};
+
+var checkRoomsCapacity = function (rooms, capacity) {
+  if (rooms === '1' && capacity === '1') {
+    roomsNumber.setCustomValidity('');
+  } else if (rooms === '2' && (capacity < '3' && capacity > '0')) {
+    roomsNumber.setCustomValidity('');
+  } else if (rooms === '3' && (capacity <= '3' && capacity > '0')) {
+    roomsNumber.setCustomValidity('');
+  } else if (rooms === '100' && capacity === '0') {
+    roomsNumber.setCustomValidity('');
+  } else {
+    roomsNumber.setCustomValidity('Не верное количество комнат или гостей');
+  }
+};
+
+adSubmit.addEventListener('click', function () {
+  checkRoomsCapacity(roomsNumber.value, capacityValue.value);
+});
+
+toggleDisabledElements(formElements);
+toggleDisabledElements(formMapElements);
+setAddress(getCoords());
+
+mapPinMain.addEventListener('mousedown', onPinClick);
+mapPinMain.addEventListener('keydown', onPinEnterPress);
+housingTypes.addEventListener('change', function () {
+  getMinPrice();
+});
