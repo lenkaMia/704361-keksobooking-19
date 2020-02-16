@@ -35,6 +35,9 @@ var capacityValue = adForm.querySelector('#capacity');
 var adFormAddress = adForm.querySelector('#address');
 var formElements = adForm.querySelectorAll('fieldset');
 var formMapElements = mapFilters.querySelectorAll('select, fieldset');
+var housingTypes = adForm.querySelector('#type');
+var priceInput = adForm.querySelector('#price');
+
 
 var getAvatarSrc = function (index) {
   return 'img/avatars/user0' + (index + 1) + '.png';
@@ -153,6 +156,28 @@ var getTypes = function (ad) {
   }
 };
 
+var getMinPrice = function () {
+  var currenthousingType = housingTypes.value;
+  switch (currenthousingType) {
+    case 'palace':
+      priceInput.min = 10000;
+      priceInput.placeholder = 10000;
+      break;
+    case 'flat':
+      priceInput.min = 1000;
+      priceInput.placeholder = 1000;
+      break;
+    case 'bungalo':
+      priceInput.min = 0;
+      priceInput.placeholder = 0;
+      break;
+    case 'house':
+      priceInput.min = 5000;
+      priceInput.placeholder = 5000;
+      break;
+  }
+};
+
 var generateCard = function (ads) {
   var cardElement = cardTemplate.cloneNode(true);
 
@@ -184,7 +209,7 @@ var toggleDisabledElements = function (formElement) {
 var getCoords = function () {
   return {
     x: parseInt(pinMain.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2),
-    y: parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT / 2)
+    y: map.classList.contains('map--faded') ? parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT / 2) : parseInt(pinMain.style.top, 10) + Math.round(PIN_MAIN_HEIGHT)
   };
 };
 
@@ -201,7 +226,7 @@ var activatePage = function () {
   renderCard(ads[0]);
   toggleDisabledElements(formElements);
   toggleDisabledElements(formMapElements);
-  setAddress(getCoords);
+  setAddress(getCoords());
 };
 
 var onPinClick = function () {
@@ -213,36 +238,34 @@ var onPinClick = function () {
 var onPinEnterPress = function (evt) {
   if (evt.key === ENTER_KEY) {
     activatePage();
+    mapPinMain.removeEventListener('keydown', onPinEnterPress);
   }
-  mapPinMain.removeEventListener('keydown', onPinEnterPress);
 };
 
-function checkRoomsCapacity(rooms, capacity) {
+var checkRoomsCapacity = function (rooms, capacity) {
   if (rooms === '1' && capacity === '1') {
     roomsNumber.setCustomValidity('');
-    return true;
   } else if (rooms === '2' && (capacity < '3' && capacity > '0')) {
     roomsNumber.setCustomValidity('');
-    return true;
   } else if (rooms === '3' && (capacity <= '3' && capacity > '0')) {
     roomsNumber.setCustomValidity('');
-    return true;
   } else if (rooms === '100' && capacity === '0') {
     roomsNumber.setCustomValidity('');
-    return true;
   } else {
     roomsNumber.setCustomValidity('Не верное количество комнат или гостей');
-    return false;
   }
-}
+};
 
 adSubmit.addEventListener('click', function () {
-  return checkRoomsCapacity(roomsNumber.value, capacityValue.value);
+  checkRoomsCapacity(roomsNumber.value, capacityValue.value);
 });
 
 toggleDisabledElements(formElements);
 toggleDisabledElements(formMapElements);
-setAddress(getCoords);
+setAddress(getCoords());
 
 mapPinMain.addEventListener('mousedown', onPinClick);
 mapPinMain.addEventListener('keydown', onPinEnterPress);
+housingTypes.addEventListener('change', function () {
+  getMinPrice();
+});
