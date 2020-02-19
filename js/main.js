@@ -18,6 +18,7 @@ var PIN_MAIN_WIDTH = 65;
 var PIN_MAIN_HEIGHT = 65;
 var pinMain = document.querySelector('.map__pin--main');
 var ENTER_KEY = 'Enter';
+// var ESC_KEY = 'Escape';
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin')
     .content
@@ -37,6 +38,10 @@ var formElements = adForm.querySelectorAll('fieldset');
 var formMapElements = mapFilters.querySelectorAll('select, fieldset');
 var housingTypes = adForm.querySelector('#type');
 var priceInput = adForm.querySelector('#price');
+var checkInTime = adForm.querySelector('#timein');
+var checkOutTime = adForm.querySelector('#timeout');
+var adTime = adForm.querySelector('.ad-form__element--time');
+var adTitle = adForm.querySelector('#title');
 
 
 var getAvatarSrc = function (index) {
@@ -156,7 +161,7 @@ var getTypes = function (ad) {
   }
 };
 
-var getMinPrice = function () {
+var setMinPrice = function () {
   var currenthousingType = housingTypes.value;
   switch (currenthousingType) {
     case 'palace':
@@ -177,6 +182,15 @@ var getMinPrice = function () {
       break;
   }
 };
+
+var setTime = function (type, time) {
+  var input = type === 'timein' ? checkOutTime : checkInTime;
+  input.value = time;
+};
+
+adTime.addEventListener('change', function (evt) {
+  setTime(evt.target.name, evt.target.value);
+});
 
 var generateCard = function (ads) {
   var cardElement = cardTemplate.cloneNode(true);
@@ -260,6 +274,18 @@ adSubmit.addEventListener('click', function () {
   checkRoomsCapacity(roomsNumber.value, capacityValue.value);
 });
 
+adTitle.addEventListener('invalid', function () {
+  if (adTitle.validity.tooShort) {
+    adTitle.setCustomValidity('Заголовок должен состоять минимум из 30-ти символов');
+  } else if (adTitle.validity.tooLong) {
+    adTitle.setCustomValidity('Заголовок не должен превышать 100 символов');
+  } else if (adTitle.validity.valueMissing) {
+    adTitle.setCustomValidity('Обязательное текстовое поле');
+  } else {
+    adTitle.setCustomValidity('');
+  }
+});
+
 toggleDisabledElements(formElements);
 toggleDisabledElements(formMapElements);
 setAddress(getCoords());
@@ -267,5 +293,5 @@ setAddress(getCoords());
 mapPinMain.addEventListener('mousedown', onPinClick);
 mapPinMain.addEventListener('keydown', onPinEnterPress);
 housingTypes.addEventListener('change', function () {
-  getMinPrice();
+  setMinPrice();
 });
