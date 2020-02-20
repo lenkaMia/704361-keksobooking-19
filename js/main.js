@@ -18,7 +18,7 @@ var PIN_MAIN_WIDTH = 65;
 var PIN_MAIN_HEIGHT = 65;
 var pinMain = document.querySelector('.map__pin--main');
 var ENTER_KEY = 'Enter';
-// var ESC_KEY = 'Escape';
+var ESC_KEY = 'Escape';
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin')
     .content
@@ -103,6 +103,16 @@ var createPin = function (ad) {
   adElement.querySelector('img').src = ad.author.avatar;
   adElement.querySelector('img').alt = ad.offer.title;
 
+  adElement.addEventListener('click', function () {
+    onCardOpen(ad);
+  });
+
+  adElement.addEventListener('keydown', function (evt) {
+    if (evt.key === ENTER_KEY) {
+      onCardOpen(ad);
+    }
+  });
+
   return adElement;
 };
 
@@ -146,7 +156,7 @@ var generatePhotos = function (photos, cardElement) {
   }
 };
 
-var getTypes = function (ad) {
+var getTranslatedType = function (ad) {
   switch (ad.offer.type) {
     case 'palace':
       return 'Дворец';
@@ -162,8 +172,8 @@ var getTypes = function (ad) {
 };
 
 var setMinPrice = function () {
-  var currenthousingType = housingTypes.value;
-  switch (currenthousingType) {
+  var currentHousingType = housingTypes.value;
+  switch (currentHousingType) {
     case 'palace':
       priceInput.min = 10000;
       priceInput.placeholder = 10000;
@@ -198,7 +208,7 @@ var generateCard = function (ads) {
   cardElement.querySelector('.popup__title').textContent = ads.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = ads.offer.address;
   cardElement.querySelector('.popup__text--price').textContent = ads.offer.price + '₽/ночь';
-  cardElement.querySelector('.popup__type').textContent = getTypes(ads);
+  cardElement.querySelector('.popup__type').textContent = getTranslatedType(ads);
   cardElement.querySelector('.popup__text--capacity').textContent = ads.offer.rooms + ' комнаты для ' + ads.offer.guests + ' гостей';
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + ads.offer.checkin + ', выезд до ' + ads.offer.checkout;
   cardElement.querySelector('.popup__description').textContent = ads.offer.description;
@@ -237,7 +247,6 @@ var activatePage = function () {
 
   var ads = generateAdsArray(ADS_QTY);
   renderPins(ads);
-  renderCard(ads[0]);
   toggleDisabledElements(formElements);
   toggleDisabledElements(formMapElements);
   setAddress(getCoords());
@@ -254,6 +263,30 @@ var onPinEnterPress = function (evt) {
     activatePage();
     mapPinMain.removeEventListener('keydown', onPinEnterPress);
   }
+};
+
+var onCardEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    closeCard();
+  }
+};
+
+var closeCard = function () {
+  var card = document.querySelector('.map__card');
+
+  if (card) {
+    var popupClose = card.querySelector('.popup__close');
+
+    card.remove();
+
+    popupClose.removeEventListener('click', closeCard);
+    document.removeEventListener('keydown', onCardEscPress);
+  }
+};
+
+var onCardOpen = function (ad) {
+  closeCard();
+  renderCard(ad);
 };
 
 var checkRoomsCapacity = function (rooms, capacity) {
