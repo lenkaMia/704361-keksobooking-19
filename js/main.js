@@ -124,6 +124,7 @@ var renderPins = function (advertisments) {
 
     fragment.appendChild(pin);
   });
+  mapPins.appendChild(fragment);
 };
 
 var generateFeatures = function (features, cardElement) {
@@ -223,7 +224,9 @@ var generateCard = function (ads) {
 var renderCard = function (adsAmount) {
   mapFilters.insertAdjacentElement('beforebegin', generateCard(adsAmount));
 
-  onPopupClose();
+  var popupClose = document.querySelector('.popup__close');
+
+  popupClose.addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onCardEscPress);
 };
 
@@ -275,15 +278,17 @@ var onCardEscPress = function (evt) {
 };
 
 var closeCard = function () {
-  document.querySelector('.map__card').remove();
-  document.removeEventListener('keydown', onCardEscPress);
+  var card = map.querySelector('.map__card');
+
+  if (card) {
+    card.remove();
+
+    document.removeEventListener('keydown', onCardEscPress);
+  }
 };
 
-var onPopupClose = function (ad) {
-  var popupClose = ad.querySelector('.popup__close');
-
-  popupClose.addEventListener('click', closeCard);
-  document.addEventListener('keydown', onCardEscPress);
+var onCloseBtnClick = function () {
+  closeCard();
 };
 
 var openCard = function (ad) {
