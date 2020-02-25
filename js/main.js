@@ -95,7 +95,7 @@ var generateAdsArray = function (adsQty) {
   return advertisments;
 };
 
-var createPin = function (ad) {
+var generatePin = function (ad) {
   var adElement = pinTemplate.cloneNode(true);
 
   adElement.style.left = (ad.location.x - PIN_WIDTH / 2) + 'px';
@@ -103,27 +103,27 @@ var createPin = function (ad) {
   adElement.querySelector('img').src = ad.author.avatar;
   adElement.querySelector('img').alt = ad.offer.title;
 
-  adElement.addEventListener('click', function () {
-    onCardOpen(ad);
-  });
-
-  adElement.addEventListener('keydown', function (evt) {
-    if (evt.key === ENTER_KEY) {
-      onCardOpen(ad);
-    }
-  });
-
   return adElement;
 };
 
 var renderPins = function (advertisments) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < advertisments.length; i++) {
-    fragment.appendChild(createPin(advertisments[i]));
-  }
+  advertisments.forEach(function (advertisment) {
+    var pin = generatePin(advertisment);
 
-  mapPins.appendChild(fragment);
+    pin.addEventListener('click', function () {
+      openCard(advertisment);
+    });
+
+    pin.addEventListener('keydown', function (evt) {
+      if (evt.key === ENTER_KEY) {
+        openCard(advertisment);
+      }
+    });
+
+    fragment.appendChild(pin);
+  });
 };
 
 var generateFeatures = function (features, cardElement) {
@@ -222,6 +222,9 @@ var generateCard = function (ads) {
 
 var renderCard = function (adsAmount) {
   mapFilters.insertAdjacentElement('beforebegin', generateCard(adsAmount));
+
+  onPopupClose();
+  document.addEventListener('keydown', onCardEscPress);
 };
 
 var toggleDisabledElements = function (formElement) {
@@ -272,19 +275,18 @@ var onCardEscPress = function (evt) {
 };
 
 var closeCard = function () {
-  var card = document.querySelector('.map__card');
-
-  if (card) {
-    var popupClose = card.querySelector('.popup__close');
-
-    card.remove();
-
-    popupClose.removeEventListener('click', closeCard);
-    document.removeEventListener('keydown', onCardEscPress);
-  }
+  document.querySelector('.map__card').remove();
+  document.removeEventListener('keydown', onCardEscPress);
 };
 
-var onCardOpen = function (ad) {
+var onPopupClose = function (ad) {
+  var popupClose = ad.querySelector('.popup__close');
+
+  popupClose.addEventListener('click', closeCard);
+  document.addEventListener('keydown', onCardEscPress);
+};
+
+var openCard = function (ad) {
   closeCard();
   renderCard(ad);
 };
