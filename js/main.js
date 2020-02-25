@@ -96,14 +96,14 @@ var generateAdsArray = function (adsQty) {
 };
 
 var generatePin = function (ad) {
-  var adElement = pinTemplate.cloneNode(true);
+  var pinElement = pinTemplate.cloneNode(true);
 
-  adElement.style.left = (ad.location.x - PIN_WIDTH / 2) + 'px';
-  adElement.style.top = (ad.location.y - PIN_HEIGHT) + 'px';
-  adElement.querySelector('img').src = ad.author.avatar;
-  adElement.querySelector('img').alt = ad.offer.title;
+  pinElement.style.left = (ad.location.x - PIN_WIDTH / 2) + 'px';
+  pinElement.style.top = (ad.location.y - PIN_HEIGHT) + 'px';
+  pinElement.querySelector('img').src = ad.author.avatar;
+  pinElement.querySelector('img').alt = ad.offer.title;
 
-  return adElement;
+  return pinElement;
 };
 
 var renderPins = function (advertisments) {
