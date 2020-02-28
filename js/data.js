@@ -49,6 +49,6 @@
   };
 
   window.data = {
-    generateAdsArray: generateAdsArray
+    generate: generateAdsArray
   };
 })();

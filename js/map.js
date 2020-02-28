@@ -53,15 +53,19 @@
     };
   };
 
+  var activateMap = function () {
+    map.classList.remove('map--faded');
+  };
+
   var onPinClick = function () {
-    window.form.activatePage();
+    window.map.activate();
 
     mapPinMain.removeEventListener('mousedown', onPinClick);
   };
 
   var onPinEnterPress = function (evt) {
     if (evt.key === window.consts.ENTER_KEY) {
-      window.form.activatePage();
+      window.map.activate();
       mapPinMain.removeEventListener('keydown', onPinEnterPress);
     }
   };
@@ -85,9 +89,9 @@
   mapPinMain.addEventListener('keydown', onPinEnterPress);
 
   window.map = {
+    activate: activateMap,
     renderPins: renderPins,
-    getCoords: getCoords,
-
+    getCoords: getCoords
   };
 
 })();

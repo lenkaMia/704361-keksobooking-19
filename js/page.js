@@ -13,4 +13,8 @@
 
   window.form.setAddress(window.map.getCoords());
 
+  window.page = {
+    activate: activatePage,
+  };
+
 })();

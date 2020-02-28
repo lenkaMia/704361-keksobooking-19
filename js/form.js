@@ -2,7 +2,6 @@
 
 (function () {
 
-  var ADS_QTY = 8;
   var adForm = document.querySelector('.ad-form');
   var adSubmit = adForm.querySelector('.ad-form__submit');
   var roomsNumber = adForm.querySelector('#room_number');
@@ -94,15 +93,10 @@
   toggleDisabledElements(formMapElements);
   setAddress(window.map.getCoords());
 
-  var activatePage = function () {
-    map.classList.remove('map--faded');
+  var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
-
-    var ads = window.data.generateAdsArray(ADS_QTY);
-    window.map.renderPins(ads);
     toggleDisabledElements(formElements);
     toggleDisabledElements(formMapElements);
-    setAddress(window.map.getCoords());
   };
 
   housingTypes.addEventListener('change', function () {
@@ -110,6 +104,7 @@
   });
 
   window.form = {
-    activatePage: activatePage,
+    activate: activateForm,
+    setAddress: setAddress
   };
 })();
