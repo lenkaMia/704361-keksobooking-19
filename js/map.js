@@ -58,14 +58,14 @@
   };
 
   var onPinClick = function () {
-    window.map.activate();
+    window.page.activate();
 
     mapPinMain.removeEventListener('mousedown', onPinClick);
   };
 
   var onPinEnterPress = function (evt) {
     if (evt.key === window.consts.ENTER_KEY) {
-      window.map.activate();
+      window.page.activate();
       mapPinMain.removeEventListener('keydown', onPinEnterPress);
     }
   };
