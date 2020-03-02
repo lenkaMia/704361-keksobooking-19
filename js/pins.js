@@ -18,7 +18,5 @@
     return pinElement;
   };
 
-  window.pins = {
-    generatePin: generatePin
-  };
+  window.generatePin = generatePin;
 })();

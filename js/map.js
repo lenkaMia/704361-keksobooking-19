@@ -20,7 +20,7 @@
     var fragment = document.createDocumentFragment();
 
     advertisments.forEach(function (advertisment) {
-      var pin = window.pins.generatePin(advertisment);
+      var pin = window.generatePin(advertisment);
 
       pin.addEventListener('click', function () {
         openCard(advertisment);
@@ -38,9 +38,10 @@
   };
 
   var renderCard = function (adsAmount) {
-    mapFilters.insertAdjacentElement('beforebegin', window.card.generateCard(adsAmount));
+    var card = window.generateCard(adsAmount);
+    mapFilters.insertAdjacentElement('beforebegin', card);
 
-    var popupClose = document.querySelector('.popup__close');
+    var popupClose = card.querySelector('.popup__close');
 
     popupClose.addEventListener('click', onCloseBtnClick);
     document.addEventListener('keydown', onCardEscPress);

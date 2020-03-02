@@ -68,8 +68,5 @@
     }
   };
 
-  window.card = {
-    generateCard: generateCard
-  };
-
+  window.generateCard = generateCard;
 })();
