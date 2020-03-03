@@ -109,6 +109,8 @@
 
         mapPinMain.style.top = (newPinPosition.x) + 'px';
         mapPinMain.style.left = (newPinPosition.y) + 'px';
+
+        window.form.setAddress(getCoords());
       };
 
       var onMouseUp = function (upEvt) {
