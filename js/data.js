@@ -48,7 +48,5 @@
     return advertisments;
   };
 
-  window.data = {
-    generate: generateAdsArray
-  };
+  window.generate = generateAdsArray;
 })();

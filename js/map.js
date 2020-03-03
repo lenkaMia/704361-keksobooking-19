@@ -5,6 +5,8 @@
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = mapPins.querySelector('.map__pin--main');
   var mapFilters = map.querySelector('.map__filters-container');
+  var LOCATION_MIN_Y = 130;
+  var LOCATION_MAX_Y = 630;
 
   var closeCard = function () {
     var card = map.querySelector('.map__card');
@@ -50,16 +52,17 @@
   var getCoords = function () {
     return {
       x: parseInt(mapPinMain.style.left, 10) + Math.round(window.consts.PIN_MAIN_WIDTH / 2),
-      y: map.classList.contains('map--faded') ? parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT / 2) : parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT)
+      y: map.classList.contains('map--faded') ? parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT / 2) : parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT) + window.consts.PIN_TAIL
     };
   };
 
-  var getNewCoords = function (newCoords) {
+  var getPosition = function (newCoords) {
     var mapWidth = parseInt(map.offsetWidth, 10);
+    var coords = getCoords();
 
     return {
-      x: getCoords.x > mapWidth || getCoords.x < 0 ? mapPinMain.offsetLeft : newCoords.x,
-      y: getCoords.y < window.data.LOCATION_MIN_Y || getCoords.y > window.data.LOCATION_MAX_Y ? mapPinMain.offsetTop : newCoords.y
+      x: coords.x > mapWidth || coords.x < 0 ? mapPinMain.offsetLeft : newCoords.x,
+      y: coords.y < LOCATION_MIN_Y || coords.y > LOCATION_MAX_Y ? mapPinMain.offsetTop : newCoords.y
     };
   };
 
@@ -67,12 +70,16 @@
     map.classList.remove('map--faded');
   };
 
+  var deactivateMap = function () {
+    map.classList.add('map--faded');
+  };
+
   var onPinClick = function (evt) {
     evt.preventDefault();
 
     if (evt.which === 1) {
       if (map.classList.contains('map--faded')) {
-        window.page.activate();
+        window.activatePage();
       }
 
       var startCoords = {
@@ -98,7 +105,7 @@
           y: mapPinMain.offsetLeft - shift.x
         };
 
-        var newPinPosition = getNewCoords(movedPinCoords);
+        var newPinPosition = getPosition(movedPinCoords);
 
         mapPinMain.style.top = (newPinPosition.x) + 'px';
         mapPinMain.style.left = (newPinPosition.y) + 'px';
@@ -119,7 +126,7 @@
 
   var onPinEnterPress = function (evt) {
     if (evt.key === window.consts.ENTER_KEY) {
-      window.page.activate();
+      window.activatePage();
       mapPinMain.removeEventListener('keydown', onPinEnterPress);
     }
   };
@@ -144,6 +151,7 @@
 
   window.map = {
     activate: activateMap,
+    deactivate: deactivateMap,
     renderPins: renderPins,
     getCoords: getCoords
   };
