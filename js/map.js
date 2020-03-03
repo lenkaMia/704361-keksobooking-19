@@ -54,12 +54,65 @@
     };
   };
 
+  var getNewCoords = function (newCoords) {
+    var mapWidth = parseInt(map.offsetWidth, 10);
+
+    return {
+      x: getCoords.x > mapWidth || getCoords.x < 0 ? mapPinMain.offsetLeft : newCoords.x,
+      y: getCoords.y < window.data.LOCATION_MIN_Y || getCoords.y > window.data.LOCATION_MAX_Y ? mapPinMain.offsetTop : newCoords.y
+    };
+  };
+
   var activateMap = function () {
     map.classList.remove('map--faded');
   };
 
-  var onPinClick = function () {
-    window.page.activate();
+  var onPinClick = function (evt) {
+    evt.preventDefault();
+
+    if (evt.which === 1) {
+      if (map.classList.contains('map--faded')) {
+        window.page.activate();
+      }
+
+      var startCoords = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+
+      var onMouseMove = function (moveEvt) {
+        moveEvt.preventDefault();
+
+        var shift = {
+          x: startCoords.x - moveEvt.clientX,
+          y: startCoords.y - moveEvt.clientY
+        };
+
+        startCoords = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
+        };
+
+        var movedPinCoords = {
+          x: mapPinMain.offsetTop - shift.y,
+          y: mapPinMain.offsetLeft - shift.x
+        };
+
+        var newPinPosition = getNewCoords(movedPinCoords);
+
+        mapPinMain.style.top = (newPinPosition.x) + 'px';
+        mapPinMain.style.left = (newPinPosition.y) + 'px';
+      };
+
+      var onMouseUp = function (upEvt) {
+        upEvt.preventDefault();
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      };
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
 
     mapPinMain.removeEventListener('mousedown', onPinClick);
   };
