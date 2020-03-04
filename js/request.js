@@ -53,8 +53,6 @@
     document.body.insertAdjacentElement('afterbegin', error);
   };
 
-  var save =
-
   window.request = {
     load: load,
     onError: onError
