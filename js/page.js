@@ -2,7 +2,7 @@
 
 (function () {
   var ADS_QTY = 8;
-  var ads = window.data.generate(ADS_QTY);
+  var ads = window.generate(ADS_QTY);
 
   var activatePage = function () {
     window.map.activate();
@@ -11,10 +11,11 @@
     window.form.setAddress(window.map.getCoords());
   };
 
+  window.form.deactivate();
+  window.map.deactivate();
+
   window.form.setAddress(window.map.getCoords());
 
-  window.page = {
-    activate: activatePage,
-  };
+  window.activatePage = activatePage;
 
 })();
