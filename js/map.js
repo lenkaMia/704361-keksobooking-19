@@ -60,7 +60,7 @@
   var calculateNewCoords = function (position) {
     return {
       x: position.x + Math.round(window.consts.PIN_MAIN_WIDTH / 2),
-      y: map.classList.contains('map--faded') ? parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT / 2) : position.y + Math.round(window.consts.PIN_MAIN_HEIGHT) + window.consts.PIN_TAIL
+      y: map.classList.contains('map--faded') ? position.y + Math.round(window.consts.PIN_MAIN_HEIGHT / 2) : position.y + Math.round(window.consts.PIN_MAIN_HEIGHT) + window.consts.PIN_TAIL
     };
   };
 
