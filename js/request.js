@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var URL_LOAD = 'https://js.dump.academy/keksobooking/data';
+  // var URL_SAVE = 'https://js.dump.academy/keksobooking';
   var TIMEOUT_IN_MS = 10000;
 
   var Errors = {
@@ -9,7 +10,7 @@
     404: 'Ничего не найдено'
   };
 
-  var setupLoad = function (url, onSuccess, onError) {
+  var setupLoad = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -52,9 +53,10 @@
     document.body.insertAdjacentElement('afterbegin', error);
   };
 
+  var save =
+
   window.request = {
     load: load,
-    onError: onError,
-    URL_LOAD: URL_LOAD
+    onError: onError
   };
 })();
