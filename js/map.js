@@ -50,15 +50,23 @@
   };
 
   var getCoords = function () {
+    var position = {
+      x: parseInt(mapPinMain.style.left, 10),
+      y: parseInt(mapPinMain.style.top, 10)
+    };
+    return calculateNewCoords(position);
+  };
+
+  var calculateNewCoords = function (position) {
     return {
-      x: parseInt(mapPinMain.style.left, 10) + Math.round(window.consts.PIN_MAIN_WIDTH / 2),
-      y: map.classList.contains('map--faded') ? parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT / 2) : parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT) + window.consts.PIN_TAIL
+      x: position.x + Math.round(window.consts.PIN_MAIN_WIDTH / 2),
+      y: map.classList.contains('map--faded') ? parseInt(mapPinMain.style.top, 10) + Math.round(window.consts.PIN_MAIN_HEIGHT / 2) : position.y + Math.round(window.consts.PIN_MAIN_HEIGHT) + window.consts.PIN_TAIL
     };
   };
 
   var getPosition = function (newCoords) {
     var mapWidth = parseInt(map.offsetWidth, 10);
-    var coords = getCoords();
+    var coords = calculateNewCoords(newCoords);
 
     return {
       x: coords.x > mapWidth || coords.x < 0 ? mapPinMain.offsetLeft : newCoords.x,
@@ -101,14 +109,14 @@
         };
 
         var movedPinCoords = {
-          x: mapPinMain.offsetTop - shift.y,
-          y: mapPinMain.offsetLeft - shift.x
+          x: mapPinMain.offsetLeft - shift.x,
+          y: mapPinMain.offsetTop - shift.y
         };
 
         var newPinPosition = getPosition(movedPinCoords);
 
-        mapPinMain.style.top = (newPinPosition.x) + 'px';
-        mapPinMain.style.left = (newPinPosition.y) + 'px';
+        mapPinMain.style.top = (newPinPosition.y) + 'px';
+        mapPinMain.style.left = (newPinPosition.x) + 'px';
 
         window.form.setAddress(getCoords());
       };
@@ -122,8 +130,6 @@
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     }
-
-    mapPinMain.removeEventListener('mousedown', onPinClick);
   };
 
   var onPinEnterPress = function (evt) {
