@@ -101,8 +101,6 @@
 
   var deactivateForm = function () {
     adForm.classList.add('ad-form--disabled');
-    toggleDisabledElements(formElements);
-    toggleDisabledElements(formMapElements);
   };
 
   housingTypes.addEventListener('change', function () {
