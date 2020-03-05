@@ -5,14 +5,12 @@
   // var ads = window.generate(ADS_QTY);
 
   var activatePage = function () {
+    window.map.activate();
+    window.form.activate();
     window.request.load(
-        function (data) {
-          window.map.activate();
-          window.form.activate();
-          window.map.renderPins(data);
-          window.form.setAddress(window.map.getCoords());
-        },
-        window.request.onError);
+        window.map.renderPins,
+        window.message.showError);
+    window.form.setAddress(window.map.getCoords());
   };
 
   window.form.deactivate();

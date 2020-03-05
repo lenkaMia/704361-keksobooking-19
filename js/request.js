@@ -4,9 +4,8 @@
   // var URL_SAVE = 'https://js.dump.academy/keksobooking';
   var TIMEOUT_IN_MS = 10000;
 
-  var Errors = {
+  var errors = {
     400: 'Неверный запрос',
-    401: 'Пользователь не авторизован',
     404: 'Ничего не найдено'
   };
 
@@ -20,7 +19,7 @@
       if (xhr.status === window.consts.SUCCESS_STATUS) {
         onSuccess(xhr.response);
       } else {
-        onError('Cтатус ответа: ' + xhr.status + ' ' + Errors[xhr.status]);
+        onError('Cтатус ответа: ' + xhr.status + ' ' + errors[xhr.status]);
       }
     });
 
@@ -42,19 +41,8 @@
     xhr.send();
   };
 
-  var onError = function (errorMessage) {
-    var errorTemplate = document.querySelector('#error')
-        .content
-        .querySelector('.error');
-    var error = errorTemplate.cloneNode(true);
-
-    error.querySelector('.error__message').textContent = errorMessage;
-
-    document.body.insertAdjacentElement('afterbegin', error);
-  };
 
   window.request = {
     load: load,
-    onError: onError
   };
 })();
