@@ -54,7 +54,9 @@
     };
 
     var onMessageEscPress = function (evt) {
-      window.utils.isEscEvent(evt, removeMessage);
+      if (evt.key === window.consts.ESC_KEY) {
+        removeMessage();
+      }
     };
 
     error.querySelector('.error__message').textContent = errorMessage;
