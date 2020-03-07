@@ -98,6 +98,7 @@
 
   var deactivateMap = function () {
     map.classList.add('map--faded');
+    closeCard();
     removePins();
     setDefaultPinMain();
   };
