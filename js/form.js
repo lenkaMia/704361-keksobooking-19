@@ -97,7 +97,7 @@
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
     adForm.addEventListener('submit', onFormSubmit);
-    // formReset.addEventListener('click', deactivateForm);
+    formReset.addEventListener('click', window.page.deactivate);
     toggleDisabledElements(formElements);
     toggleDisabledElements(formMapElements);
   };
@@ -107,7 +107,6 @@
 
     window.request.save(new FormData(adForm),
         function () {
-          setResetClick();
           window.page.deactivate();
           window.message.showSuccess();
         }, window.message.showError);
@@ -122,14 +121,7 @@
     toggleDisabledElements(formMapElements);
 
     adForm.removeEventListener('submit', onFormSubmit);
-    // formReset.removeEventListener('click', deactivateForm);
-  };
-
-  var setResetClick = function () {
-    formReset.addEventListener('click', function (evt) {
-      evt.preventDefault();
-      adForm.reset();
-    });
+    formReset.removeEventListener('click', window.page.deactivate);
   };
 
   housingTypes.addEventListener('change', function () {
