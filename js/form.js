@@ -4,12 +4,13 @@
 
   var adForm = document.querySelector('.ad-form');
   var adSubmit = adForm.querySelector('.ad-form__submit');
+  var formReset = adForm.querySelector('.ad-form__reset');
   var roomsNumber = adForm.querySelector('#room_number');
   var capacityValue = adForm.querySelector('#capacity');
   var adFormAddress = adForm.querySelector('#address');
   var formElements = adForm.querySelectorAll('fieldset');
   var map = document.querySelector('.map');
-  var mapFilters = map.querySelector('.map__filters-container');
+  var mapFilters = map.querySelector('.map__filters');
   var formMapElements = mapFilters.querySelectorAll('select, fieldset');
   var housingTypes = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
@@ -95,12 +96,36 @@
 
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
+    adForm.addEventListener('submit', onFormSubmit);
+    formReset.addEventListener('click', onResetClick);
     toggleDisabledElements(formElements);
     toggleDisabledElements(formMapElements);
   };
 
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+
+    window.request.save(new FormData(adForm),
+        function () {
+          window.page.deactivate();
+          window.message.showSuccess();
+        }, window.message.showError);
+  };
+
   var deactivateForm = function () {
     adForm.classList.add('ad-form--disabled');
+
+    adForm.reset();
+    mapFilters.reset();
+    toggleDisabledElements(formElements);
+    toggleDisabledElements(formMapElements);
+
+    adForm.removeEventListener('submit', onFormSubmit);
+    formReset.removeEventListener('click', onResetClick);
+  };
+
+  var onResetClick = function () {
+    window.page.deactivate();
   };
 
   housingTypes.addEventListener('change', function () {
@@ -110,6 +135,6 @@
   window.form = {
     activate: activateForm,
     deactivate: deactivateForm,
-    setAddress: setAddress
+    setAddress: setAddress,
   };
 })();

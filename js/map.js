@@ -4,6 +4,10 @@
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = mapPins.querySelector('.map__pin--main');
+  var pinMainCoords = {
+    x: parseInt(mapPinMain.style.left, 10),
+    y: parseInt(mapPinMain.style.top, 10)
+  };
   var mapFilters = map.querySelector('.map__filters-container');
   var LOCATION_MIN_Y = 130;
   var LOCATION_MAX_Y = 630;
@@ -74,12 +78,29 @@
     };
   };
 
+  var setDefaultPinMain = function () {
+    mapPinMain.style.left = pinMainCoords.x + 'px';
+    mapPinMain.style.top = pinMainCoords.y + 'px';
+  };
+
+
+  var removePins = function () {
+    var pins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   var activateMap = function () {
     map.classList.remove('map--faded');
   };
 
   var deactivateMap = function () {
     map.classList.add('map--faded');
+    closeCard();
+    removePins();
+    setDefaultPinMain();
   };
 
   var onPinClick = function (evt) {
@@ -87,7 +108,7 @@
 
     if (evt.which === 1) {
       if (map.classList.contains('map--faded')) {
-        window.activatePage();
+        window.page.activate();
       }
 
       var startCoords = {
@@ -134,7 +155,7 @@
 
   var onPinEnterPress = function (evt) {
     if (evt.key === window.consts.ENTER_KEY) {
-      window.activatePage();
+      window.page.activate();
       mapPinMain.removeEventListener('keydown', onPinEnterPress);
     }
   };
