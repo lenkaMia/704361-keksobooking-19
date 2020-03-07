@@ -97,7 +97,7 @@
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
     adForm.addEventListener('submit', onFormSubmit);
-    formReset.addEventListener('click', window.page.deactivate);
+    formReset.addEventListener('click', onResetClick);
     toggleDisabledElements(formElements);
     toggleDisabledElements(formMapElements);
   };
@@ -121,7 +121,11 @@
     toggleDisabledElements(formMapElements);
 
     adForm.removeEventListener('submit', onFormSubmit);
-    formReset.removeEventListener('click', window.page.deactivate);
+    formReset.removeEventListener('click', onResetClick);
+  };
+
+  var onResetClick = function () {
+    window.page.deactivate();
   };
 
   housingTypes.addEventListener('change', function () {
