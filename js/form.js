@@ -112,6 +112,12 @@
 
   var deactivateForm = function () {
     adForm.classList.add('ad-form--disabled');
+
+    adForm.reset();
+    mapFilters.reset();
+
+    adForm.removeEventListener('submit', onFormSubmit);
+    formReset.removeEventListener('click', deactivateForm);
   };
 
   housingTypes.addEventListener('change', function () {
