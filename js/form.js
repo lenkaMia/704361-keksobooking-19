@@ -4,6 +4,7 @@
 
   var adForm = document.querySelector('.ad-form');
   var adSubmit = adForm.querySelector('.ad-form__submit');
+  var formReset = adForm.querySelector('.ad-form__reset');
   var roomsNumber = adForm.querySelector('#room_number');
   var capacityValue = adForm.querySelector('#capacity');
   var adFormAddress = adForm.querySelector('#address');
@@ -95,8 +96,18 @@
 
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
+    adForm.addEventListener('submit', onFormSubmit);
+    formReset.addEventListener('click', deactivateForm);
     toggleDisabledElements(formElements);
     toggleDisabledElements(formMapElements);
+  };
+
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+
+    window.request.save(new FormData(adForm), window.message.showSuccess, window.message.showError);
+
+    deactivateForm();
   };
 
   var deactivateForm = function () {

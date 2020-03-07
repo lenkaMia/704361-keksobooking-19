@@ -74,12 +74,21 @@
     };
   };
 
+  var removePins = function () {
+    var pins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+  };
+
   var activateMap = function () {
     map.classList.remove('map--faded');
   };
 
   var deactivateMap = function () {
     map.classList.add('map--faded');
+    removePins();
   };
 
   var onPinClick = function (evt) {
