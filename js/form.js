@@ -10,7 +10,7 @@
   var adFormAddress = adForm.querySelector('#address');
   var formElements = adForm.querySelectorAll('fieldset');
   var map = document.querySelector('.map');
-  var mapFilters = map.querySelector('.map__filters-container');
+  var mapFilters = map.querySelector('.map__filters');
   var formMapElements = mapFilters.querySelectorAll('select, fieldset');
   var housingTypes = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
@@ -107,7 +107,7 @@
 
     window.request.save(new FormData(adForm), window.message.showSuccess, window.message.showError);
 
-    deactivateForm();
+    window.page.deactivate();
   };
 
   var deactivateForm = function () {
@@ -115,6 +115,8 @@
 
     adForm.reset();
     mapFilters.reset();
+    toggleDisabledElements(formElements);
+    toggleDisabledElements(formMapElements);
 
     adForm.removeEventListener('submit', onFormSubmit);
     formReset.removeEventListener('click', deactivateForm);
