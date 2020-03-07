@@ -17,11 +17,13 @@
     window.form.deactivate();
     window.map.deactivate();
     window.form.setAddress(window.map.getCoords());
-  }
+  };
 
 
   window.form.setAddress(window.map.getCoords());
 
-  window.activatePage = activatePage;
-
+  window.page = {
+    activatePage: activatePage,
+    deactivatePage: deactivatePage
+  };
 })();

@@ -4,6 +4,10 @@
   var map = document.querySelector('.map');
   var mapPins = map.querySelector('.map__pins');
   var mapPinMain = mapPins.querySelector('.map__pin--main');
+  var pinMainCoords = {
+    x: parseInt(mapPinMain.style.left, 10),
+    y: parseInt(mapPinMain.style.top, 10)
+  };
   var mapFilters = map.querySelector('.map__filters-container');
   var LOCATION_MIN_Y = 130;
   var LOCATION_MAX_Y = 630;
@@ -74,6 +78,12 @@
     };
   };
 
+  var setDefaultPinMain = function () {
+    mapPinMain.style.left = pinMainCoords.x + 'px';
+    mapPinMain.style.top = pinMainCoords.y + 'px';
+  };
+
+
   var removePins = function () {
     var pins = map.querySelectorAll('.map__pin:not(.map__pin--main)');
 
@@ -89,6 +99,7 @@
   var deactivateMap = function () {
     map.classList.add('map--faded');
     removePins();
+    setDefaultPinMain();
   };
 
   var onPinClick = function (evt) {
