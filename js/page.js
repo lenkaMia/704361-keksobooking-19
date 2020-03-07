@@ -23,7 +23,7 @@
   window.form.setAddress(window.map.getCoords());
 
   window.page = {
-    activatePage: activatePage,
-    deactivatePage: deactivatePage
+    activate: activatePage,
+    deactivate: deactivatePage
   };
 })();

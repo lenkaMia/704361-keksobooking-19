@@ -107,7 +107,7 @@
 
     if (evt.which === 1) {
       if (map.classList.contains('map--faded')) {
-        window.activatePage();
+        window.page.activate();
       }
 
       var startCoords = {
@@ -154,7 +154,7 @@
 
   var onPinEnterPress = function (evt) {
     if (evt.key === window.consts.ENTER_KEY) {
-      window.activatePage();
+      window.page.activate();
       mapPinMain.removeEventListener('keydown', onPinEnterPress);
     }
   };
