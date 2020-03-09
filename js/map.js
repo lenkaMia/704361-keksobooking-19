@@ -8,7 +8,7 @@
     x: parseInt(mapPinMain.style.left, 10),
     y: parseInt(mapPinMain.style.top, 10)
   };
-  var mapFilters = map.querySelector('.map__filters-container');
+  var mapFilters = map.querySelector('.map__filters');
   var LOCATION_MIN_Y = 130;
   var LOCATION_MAX_Y = 630;
 
@@ -24,8 +24,9 @@
 
   var renderPins = function (advertisments) {
     var fragment = document.createDocumentFragment();
+    var filteredAds = window.filter(advertisments).slice(0, window.consts.PINS_QTY);
 
-    advertisments.forEach(function (advertisment) {
+    filteredAds.forEach(function (advertisment) {
       var pin = window.generatePin(advertisment);
 
       pin.addEventListener('click', function () {
@@ -94,6 +95,18 @@
 
   var activateMap = function () {
     map.classList.remove('map--faded');
+  };
+
+  var onFilterChange = window.debounce(function (data) {
+    removePins();
+    closeCard();
+    renderPins(data);
+  });
+
+  var onSuccess = function (data) {
+    mapFilters.addEventListener('change', function () {
+      onFilterChange(data);
+    });
   };
 
   var deactivateMap = function () {
@@ -182,7 +195,8 @@
     activate: activateMap,
     deactivate: deactivateMap,
     renderPins: renderPins,
-    getCoords: getCoords
+    getCoords: getCoords,
+    onSuccess: onSuccess
   };
 
 })();

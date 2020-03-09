@@ -8,7 +8,7 @@
     window.map.activate();
     window.form.activate();
     window.request.load(
-        window.map.renderPins,
+        window.map.onSuccess,
         window.message.showError);
     window.form.setAddress(window.map.getCoords());
   };
