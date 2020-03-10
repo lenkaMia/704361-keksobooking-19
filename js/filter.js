@@ -54,11 +54,13 @@
   };
 
   var deactivateFilters = function () {
-    window.utils.toggleDisabledElements(mapFilters);
+    mapFilters.reset();
     window.utils.toggleDisabledElements(formMapElements);
   };
 
   deactivateFilters();
+  window.utils.toggleDisabledElements(formMapElements);
+
 
   window.filter = {
     activate: activateFilters,
