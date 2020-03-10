@@ -81,14 +81,14 @@
     }
   });
 
-  window.utils.toggleDisabledElements(formElements);
+  window.toggleDisabledElements(formElements);
   setAddress(window.map.getCoords());
 
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
     adForm.addEventListener('submit', onFormSubmit);
     formReset.addEventListener('click', onResetClick);
-    window.utils.toggleDisabledElements(formElements);
+    window.toggleDisabledElements(formElements);
   };
 
   var onFormSubmit = function (evt) {
@@ -105,7 +105,7 @@
     adForm.classList.add('ad-form--disabled');
 
     adForm.reset();
-    window.utils.toggleDisabledElements(formElements);
+    window.toggleDisabledElements(formElements);
 
     adForm.removeEventListener('submit', onFormSubmit);
     formReset.removeEventListener('click', onResetClick);

@@ -49,16 +49,15 @@
   };
 
   var activateFilters = function () {
-    window.utils.toggleDisabledElements(formMapElements);
+    window.toggleDisabledElements(formMapElements);
   };
 
   var deactivateFilters = function () {
     mapFilters.reset();
-    window.utils.toggleDisabledElements(formMapElements);
+    window.toggleDisabledElements(formMapElements);
   };
 
-  deactivateFilters();
-  window.utils.toggleDisabledElements(formMapElements);
+  window.toggleDisabledElements(formMapElements);
 
 
   window.filter = {

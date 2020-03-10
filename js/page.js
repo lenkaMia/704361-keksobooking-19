@@ -5,6 +5,7 @@
   var activatePage = function () {
     window.map.activate();
     window.form.activate();
+    window.filter.activate();
     window.request.load(
         onSuccess,
         window.message.showError);
@@ -14,6 +15,7 @@
   var deactivatePage = function () {
     window.form.deactivate();
     window.map.deactivate();
+    window.filter.deactivate();
     window.form.setAddress(window.map.getCoords());
   };
 
