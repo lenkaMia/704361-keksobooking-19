@@ -49,7 +49,6 @@
   };
 
   var activateFilters = function () {
-    window.utils.toggleDisabledElements(mapFilters);
     window.utils.toggleDisabledElements(formMapElements);
   };
 
