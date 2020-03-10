@@ -18,7 +18,7 @@
   };
 
   var onSuccess = function (ads) {
-    var filteredAds = window.filter(ads).slice(0, window.consts.PINS_QTY);
+    var filteredAds = window.filter.filterData(ads).slice(0, window.consts.PINS_QTY);
     window.map.renderPins(filteredAds);
   };
 

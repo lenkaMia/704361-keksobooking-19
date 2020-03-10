@@ -17,10 +17,17 @@
     return array.slice(0, Math.floor(Math.random() * array.length) + 1);
   };
 
+  var toggleDisabledElements = function (blocks) {
+    for (var i = 0; i < blocks.length; i++) {
+      blocks[i].disabled = !blocks[i].disabled;
+    }
+  };
+
   window.utils = {
     getAvatarSrc: getAvatarSrc,
     getRandomInteger: getRandomInteger,
     getRandomElement: getRandomElement,
-    getRandomLengthArray: getRandomLengthArray
+    getRandomLengthArray: getRandomLengthArray,
+    toggleDisabledElements: toggleDisabledElements
   };
 })();

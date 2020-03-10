@@ -2,6 +2,7 @@
 
 (function () {
   var mapFilters = document.querySelector('.map__filters');
+  var formMapElements = mapFilters.querySelectorAll('select, fieldset');
   var housingType = mapFilters.querySelector('#housing-type');
   var housingGuests = mapFilters.querySelector('#housing-guests');
   var housingRooms = mapFilters.querySelector('#housing-rooms');
@@ -21,6 +22,16 @@
     }
   };
 
+  var filterData = function (ads) {
+    return ads.filter(function (element) {
+      return filterHousing(element.offer.type, housingType) &&
+      filterHousingPrice(element.offer.price, housingPrice) &&
+      filterHousing(element.offer.quests, housingGuests) &&
+      filterHousing(element.offer.rooms, housingRooms) &&
+      filterHousingFeatures(element.offer.features);
+    });
+  };
+
   var filterHousing = function (data, filterElement) {
     return filterElement.value === 'any' ? true : data === filterElement.value;
   };
@@ -37,14 +48,23 @@
     return filterElement.value === 'any' ? true : roomPrice[filterElement.value].min <= dataElement && dataElement < roomPrice[filterElement.value].max;
   };
 
+  var activateFilters = function () {
+    window.utils.toggleDisabledElements(mapFilters);
+    window.utils.toggleDisabledElements(formMapElements);
+  };
 
-  window.filter = function (ads) {
-    return ads.filter(function (element) {
-      return filterHousing(element.offer.type, housingType) &&
-      filterHousingPrice(element.offer.price, housingPrice) &&
-      filterHousing(element.offer.quests, housingGuests) &&
-      filterHousing(element.offer.rooms, housingRooms) &&
-      filterHousingFeatures(element.offer.features);
-    });
+  var deactivateFilters = function () {
+    window.utils.toggleDisabledElements(mapFilters);
+    window.utils.toggleDisabledElements(formMapElements);
+  };
+
+  deactivateFilters();
+  window.utils.toggleDisabledElements(formMapElements);
+
+
+  window.filter = {
+    activate: activateFilters,
+    deactivate: deactivateFilters,
+    filterData: filterData
   };
 })();

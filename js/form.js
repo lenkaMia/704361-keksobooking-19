@@ -9,9 +9,6 @@
   var capacityValue = adForm.querySelector('#capacity');
   var adFormAddress = adForm.querySelector('#address');
   var formElements = adForm.querySelectorAll('fieldset');
-  var map = document.querySelector('.map');
-  var mapFilters = map.querySelector('.map__filters');
-  var formMapElements = mapFilters.querySelectorAll('select, fieldset');
   var housingTypes = adForm.querySelector('#type');
   var priceInput = adForm.querySelector('#price');
   var checkInTime = adForm.querySelector('#timein');
@@ -50,12 +47,6 @@
     setTime(evt.target.name, evt.target.value);
   });
 
-  var toggleDisabledElements = function (formElement) {
-    for (var i = 0; i < formElement.length; i++) {
-      formElement[i].disabled = !formElement[i].disabled;
-    }
-  };
-
   var setAddress = function (coords) {
     adFormAddress.value = coords.x + ' , ' + coords.y;
   };
@@ -90,16 +81,14 @@
     }
   });
 
-  toggleDisabledElements(formElements);
-  toggleDisabledElements(formMapElements);
+  window.utils.toggleDisabledElements(formElements);
   setAddress(window.map.getCoords());
 
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
     adForm.addEventListener('submit', onFormSubmit);
     formReset.addEventListener('click', onResetClick);
-    toggleDisabledElements(formElements);
-    toggleDisabledElements(formMapElements);
+    window.utils.toggleDisabledElements(formElements);
   };
 
   var onFormSubmit = function (evt) {
@@ -116,9 +105,7 @@
     adForm.classList.add('ad-form--disabled');
 
     adForm.reset();
-    mapFilters.reset();
-    toggleDisabledElements(formElements);
-    toggleDisabledElements(formMapElements);
+    window.utils.toggleDisabledElements(formElements);
 
     adForm.removeEventListener('submit', onFormSubmit);
     formReset.removeEventListener('click', onResetClick);
