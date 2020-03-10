@@ -9,6 +9,9 @@
     window.request.load(
         onSuccess,
         window.message.showError);
+    window.filter.setFilter(window.debounce(function () {
+      onFilterChange();
+    }));
     window.form.setAddress(window.map.getCoords());
   };
 
@@ -24,6 +27,10 @@
     window.map.renderPins(filteredAds);
   };
 
+  var onFilterChange = function (data) {
+    var filteredData = window.filter.filterData(data);
+    window.map.renderPins(filteredData);
+  };
 
   window.form.setAddress(window.map.getCoords());
 

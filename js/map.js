@@ -22,6 +22,8 @@
   };
 
   var renderPins = function (advertisments) {
+    closeCard();
+    removePins();
     var fragment = document.createDocumentFragment();
 
     advertisments.forEach(function (advertisment) {
@@ -187,7 +189,7 @@
     activate: activateMap,
     deactivate: deactivateMap,
     renderPins: renderPins,
-    getCoords: getCoords,
+    getCoords: getCoords
   };
 
 })();

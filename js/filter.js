@@ -57,12 +57,19 @@
     window.toggleDisabledElements(formMapElements);
   };
 
+  var setFilter = function (cb) {
+    mapFilters.addEventListener('change', function () {
+      cb();
+    });
+  };
+
   window.toggleDisabledElements(formMapElements);
 
 
   window.filter = {
     activate: activateFilters,
     deactivate: deactivateFilters,
-    filterData: filterData
+    filterData: filterData,
+    setFilter: setFilter
   };
 })();
