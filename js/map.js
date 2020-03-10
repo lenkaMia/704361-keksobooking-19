@@ -24,9 +24,8 @@
 
   var renderPins = function (advertisments) {
     var fragment = document.createDocumentFragment();
-    var filteredAds = window.filter(advertisments).slice(0, window.consts.PINS_QTY);
 
-    filteredAds.forEach(function (advertisment) {
+    advertisments.forEach(function (advertisment) {
       var pin = window.generatePin(advertisment);
 
       pin.addEventListener('click', function () {
@@ -97,17 +96,11 @@
     map.classList.remove('map--faded');
   };
 
-  var onFilterChange = window.debounce(function (data) {
-    removePins();
-    closeCard();
-    renderPins(data);
-  });
-
-  var onSuccess = function (data) {
-    mapFilters.addEventListener('change', function () {
-      onFilterChange(data);
-    });
-  };
+  // var onFilterChange = window.debounce(function (data) {
+  //   removePins();
+  //   closeCard();
+  //   renderPins(data);
+  // });
 
   var deactivateMap = function () {
     map.classList.add('map--faded');
@@ -195,8 +188,7 @@
     activate: activateMap,
     deactivate: deactivateMap,
     renderPins: renderPins,
-    getCoords: getCoords,
-    onSuccess: onSuccess
+    getCoords: getCoords
   };
 
 })();
