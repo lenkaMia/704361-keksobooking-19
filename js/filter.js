@@ -59,8 +59,6 @@
   };
 
   deactivateFilters();
-  window.utils.toggleDisabledElements(formMapElements);
-
 
   window.filter = {
     activate: activateFilters,
