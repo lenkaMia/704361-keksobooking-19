@@ -24,7 +24,7 @@
 
   var filterData = function (ads) {
     return ads.filter(function (element) {
-      return filterHousing(element.offer.type, housingType.value) &&
+      return filterHousingType(element.offer.type, housingType.value) &&
       filterHousingPrice(element.offer.price, housingPrice.value) &&
       filterHousing(element.offer.guests, housingGuests.value) &&
       filterHousing(element.offer.rooms, housingRooms.value) &&
@@ -34,6 +34,10 @@
 
   var filterHousing = function (data, filterElement) {
     return filterElement === 'any' || data === +filterElement;
+  };
+
+  var filterHousingType = function (data, filterElement) {
+    return filterElement === 'any' || data === filterElement;
   };
 
   var filterHousingFeatures = function (data) {
