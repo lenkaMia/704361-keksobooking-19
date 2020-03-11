@@ -49,12 +49,12 @@
   };
 
   var activateFilters = function () {
-    window.toggleDisabledElements(formMapElements);
+    window.toggleDisabledElements(formMapElements, false);
   };
 
   var deactivateFilters = function () {
     mapFilters.reset();
-    window.toggleDisabledElements(formMapElements);
+    window.toggleDisabledElements(formMapElements, true);
   };
 
   var setFilter = function (cb) {
@@ -63,7 +63,7 @@
     });
   };
 
-  window.toggleDisabledElements(formMapElements);
+  window.toggleDisabledElements(formMapElements, true);
 
 
   window.filter = {

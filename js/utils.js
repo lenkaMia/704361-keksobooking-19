@@ -1,10 +1,10 @@
 'use strict';
 
 (function () {
-  var toggleDisabledElements = function (blocks) {
-    for (var i = 0; i < blocks.length; i++) {
-      blocks[i].disabled = !blocks[i].disabled;
-    }
+  var toggleDisabledElements = function (blocks, isItTrue) {
+    blocks.forEach(function (item) {
+      item.disabled = isItTrue;
+    });
   };
 
   window.toggleDisabledElements = toggleDisabledElements;
