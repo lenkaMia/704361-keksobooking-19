@@ -8,7 +8,6 @@
     x: parseInt(mapPinMain.style.left, 10),
     y: parseInt(mapPinMain.style.top, 10)
   };
-  var mapFilters = map.querySelector('.map__filters-container');
   var LOCATION_MIN_Y = 130;
   var LOCATION_MAX_Y = 630;
 
@@ -23,6 +22,8 @@
   };
 
   var renderPins = function (advertisments) {
+    closeCard();
+    removePins();
     var fragment = document.createDocumentFragment();
 
     advertisments.forEach(function (advertisment) {
@@ -45,7 +46,7 @@
 
   var renderCard = function (adsAmount) {
     var card = window.generateCard(adsAmount);
-    mapFilters.insertAdjacentElement('beforebegin', card);
+    map.appendChild(card);
 
     var popupClose = card.querySelector('.popup__close');
 

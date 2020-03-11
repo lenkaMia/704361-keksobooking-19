@@ -8,6 +8,7 @@
     PIN_TAIL: 22,
     ENTER_KEY: 'Enter',
     ESC_KEY: 'Escape',
-    SUCCESS_STATUS: 200
+    SUCCESS_STATUS: 200,
+    PINS_QTY: 5
   };
 })();
