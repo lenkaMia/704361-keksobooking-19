@@ -26,7 +26,7 @@
     return ads.filter(function (element) {
       return filterHousing(element.offer.type, housingType) &&
       filterHousingPrice(element.offer.price, housingPrice) &&
-      filterHousing(element.offer.quests, housingGuests) &&
+      filterHousing(element.offer.guests, housingGuests) &&
       filterHousing(element.offer.rooms, housingRooms) &&
       filterHousingFeatures(element.offer.features);
     });
