@@ -25,7 +25,7 @@
   var advertisments = [];
 
   var updatePins = function () {
-    var filteredAds = window.filter.filterData(advertisments).slice(0, window.consts.PINS_QTY);
+    var filteredAds = window.filter.getData(advertisments).slice(0, window.consts.PINS_QTY);
     window.map.renderPins(filteredAds);
   };
 

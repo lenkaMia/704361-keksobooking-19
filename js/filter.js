@@ -24,16 +24,16 @@
 
   var filterData = function (ads) {
     return ads.filter(function (element) {
-      return filterHousing(element.offer.type, housingType) &&
-      filterHousingPrice(element.offer.price, housingPrice) &&
-      filterHousing(element.offer.guests, housingGuests) &&
-      filterHousing(element.offer.rooms, housingRooms) &&
+      return filterHousing(element.offer.type, housingType.value) &&
+      filterHousingPrice(element.offer.price, housingPrice.value) &&
+      filterHousing(element.offer.guests, housingGuests.value) &&
+      filterHousing(element.offer.rooms, housingRooms.value) &&
       filterHousingFeatures(element.offer.features);
     });
   };
 
   var filterHousing = function (data, filterElement) {
-    return filterElement.value === 'any' ? true : data.toString() === filterElement.value;
+    return filterElement === 'any' || data === +filterElement;
   };
 
   var filterHousingFeatures = function (data) {
@@ -45,7 +45,7 @@
   };
 
   var filterHousingPrice = function (data, filterElement) {
-    return filterElement.value === 'any' ? true : roomPrice[filterElement.value].min <= data && data < roomPrice[filterElement.value].max;
+    return filterElement === 'any' ? true : roomPrice[filterElement].min <= data && data < roomPrice[filterElement].max;
   };
 
   var activateFilters = function () {
@@ -57,10 +57,8 @@
     window.toggleDisabledElements(formMapElements, true);
   };
 
-  var setFilter = function (cb) {
-    mapFilters.addEventListener('change', function () {
-      cb();
-    });
+  var setFilter = function (handler) {
+    mapFilters.addEventListener('change', handler);
   };
 
   window.toggleDisabledElements(formMapElements, true);
@@ -69,7 +67,7 @@
   window.filter = {
     activate: activateFilters,
     deactivate: deactivateFilters,
-    filterData: filterData,
+    getData: filterData,
     setFilter: setFilter
   };
 })();
