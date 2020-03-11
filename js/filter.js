@@ -33,7 +33,7 @@
   };
 
   var filterHousing = function (data, filterElement) {
-    return filterElement.value === 'any' ? true : data === filterElement.value;
+    return filterElement.value === 'any' ? true : data.toString() === filterElement.value;
   };
 
   var filterHousingFeatures = function (data) {
@@ -44,8 +44,8 @@
     });
   };
 
-  var filterHousingPrice = function (dataElement, filterElement) {
-    return filterElement.value === 'any' ? true : roomPrice[filterElement.value].min <= dataElement && dataElement < roomPrice[filterElement.value].max;
+  var filterHousingPrice = function (data, filterElement) {
+    return filterElement.value === 'any' ? true : roomPrice[filterElement.value].min <= data && data < roomPrice[filterElement.value].max;
   };
 
   var activateFilters = function () {
