@@ -97,12 +97,6 @@
     map.classList.remove('map--faded');
   };
 
-  // var onFilterChange = window.debounce(function (data) {
-  //   removePins();
-  //   closeCard();
-  //   renderPins(data);
-  // });
-
   var deactivateMap = function () {
     map.classList.add('map--faded');
     closeCard();

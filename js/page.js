@@ -10,7 +10,7 @@
         onSuccess,
         window.message.showError);
     window.filter.setFilter(window.debounce(function () {
-      onFilterChange();
+      updatePins();
     }));
     window.form.setAddress(window.map.getCoords());
   };
@@ -22,14 +22,16 @@
     window.form.setAddress(window.map.getCoords());
   };
 
-  var onSuccess = function (ads) {
-    var filteredAds = window.filter.filterData(ads).slice(0, window.consts.PINS_QTY);
+  var advertisments = [];
+
+  var updatePins = function () {
+    var filteredAds = window.filter.filterData(advertisments).slice(0, window.consts.PINS_QTY);
     window.map.renderPins(filteredAds);
   };
 
-  var onFilterChange = function (data) {
-    var filteredData = window.filter.filterData(data);
-    window.map.renderPins(filteredData);
+  var onSuccess = function (ads) {
+    advertisments = ads;
+    updatePins();
   };
 
   window.form.setAddress(window.map.getCoords());
