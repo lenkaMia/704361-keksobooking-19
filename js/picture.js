@@ -3,6 +3,8 @@
 (function () {
   var avatar = document.querySelector('.ad-form-header__preview img');
   var housingPicture = document.querySelector('.ad-form__photo');
+  var avatarChooser = document.querySelector('.ad-form-header__input');
+  var pictureChooser = document.querySelector('.ad-form__input');
 
   var loadPicture = function (evt, picture) {
     var file = evt.target.files[0];
@@ -28,14 +30,20 @@
   };
 
   var onPictureLoad = function (evt) {
+    var newDiv = createNewDiv();
     var housingImg = document.createElement('img');
 
     housingImg.width = window.consts.PICTURE_SIZE;
     housingImg.height = window.consts.PICTURE_SIZE;
 
-    housingPicture.appendChild(housingImg);
-
+    newDiv.appendChild(housingImg);
     loadPicture(evt, housingImg);
+  };
+
+  var createNewDiv = function () {
+    var div = document.createElement('div');
+    div.classList.add('ad-form__photo');
+    return div;
   };
 
   var resetPicture = function () {
@@ -43,9 +51,8 @@
     housingPicture.innerHTML = '';
   };
 
-  window.picture = {
-    onAvatarLoad: onAvatarLoad,
-    onPictureLoad: onPictureLoad,
-    resetPicture: resetPicture
-  };
+  avatarChooser.addEventListener('change', onAvatarLoad);
+  pictureChooser.addEventListener('change', onPictureLoad);
+
+  window.resetPicture = resetPicture;
 })();
