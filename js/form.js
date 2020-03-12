@@ -15,6 +15,8 @@
   var checkOutTime = adForm.querySelector('#timeout');
   var adTime = adForm.querySelector('.ad-form__element--time');
   var adTitle = adForm.querySelector('#title');
+  var avatarChooser = adForm.querySelector('.ad-form-header__input');
+  var pictureChooser = adForm.querySelector('.ad-form__input');
 
   var setMinPrice = function () {
     var currentHousingType = housingTypes.value;
@@ -86,6 +88,8 @@
 
   var activateForm = function () {
     adForm.classList.remove('ad-form--disabled');
+    avatarChooser.addEventListener('change', window.picture.onAvatarLoad);
+    pictureChooser.addEventListener('change', window.picture.onPictureLoad);
     adForm.addEventListener('submit', onFormSubmit);
     formReset.addEventListener('click', onResetClick);
     window.toggleDisabledElements(formElements, false);
@@ -105,8 +109,11 @@
     adForm.classList.add('ad-form--disabled');
 
     adForm.reset();
+    window.picture.resetPicture();
     window.toggleDisabledElements(formElements, true);
 
+    avatarChooser.removeEventListener('change', window.picture.onAvatarLoad);
+    pictureChooser.removeEventListener('change', window.picture.onPictureLoad);
     adForm.removeEventListener('submit', onFormSubmit);
     formReset.removeEventListener('click', onResetClick);
   };

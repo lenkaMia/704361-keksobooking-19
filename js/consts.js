@@ -9,6 +9,8 @@
     ENTER_KEY: 'Enter',
     ESC_KEY: 'Escape',
     SUCCESS_STATUS: 200,
-    PINS_QTY: 5
+    PINS_QTY: 5,
+    FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
+    PICTURE_SIZE: 70
   };
 })();
