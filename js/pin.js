@@ -8,14 +8,14 @@
       .querySelector('.map__pin');
 
   var generatePin = function (ad) {
-    var pinElement = pinTemplate.cloneNode(true);
+    var pin = pinTemplate.cloneNode(true);
 
-    pinElement.style.left = (ad.location.x - PIN_WIDTH / 2) + 'px';
-    pinElement.style.top = (ad.location.y - PIN_HEIGHT) + 'px';
-    pinElement.querySelector('img').src = ad.author.avatar;
-    pinElement.querySelector('img').alt = ad.offer.title;
+    pin.style.left = (ad.location.x - PIN_WIDTH / 2) + 'px';
+    pin.style.top = (ad.location.y - PIN_HEIGHT) + 'px';
+    pin.querySelector('img').src = ad.author.avatar;
+    pin.querySelector('img').alt = ad.offer.title;
 
-    return pinElement;
+    return pin;
   };
 
   window.generatePin = generatePin;

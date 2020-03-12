@@ -11,6 +11,7 @@
     SUCCESS_STATUS: 200,
     PINS_QTY: 5,
     FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
-    PICTURE_SIZE: 70
+    PICTURE_SIZE: 70,
+    DEBOUNCE_INTERVAL: 300
   };
 })();
