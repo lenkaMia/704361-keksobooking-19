@@ -2,9 +2,11 @@
 
 (function () {
   var avatar = document.querySelector('.ad-form-header__preview img');
-  var housingPicture = document.querySelector('.ad-form__photo');
+  var emptyPhoto = document.querySelector('.ad-form__photo');
   var avatarChooser = document.querySelector('.ad-form-header__input');
   var pictureChooser = document.querySelector('.ad-form__input');
+  var adFormPhotoContainer = document.querySelector('.ad-form__photo-container');
+  var pictureFileChooser = document.querySelector('.ad-form__upload');
 
   var loadPicture = function (evt, picture) {
     var file = evt.target.files[0];
@@ -36,7 +38,9 @@
     housingImg.width = window.consts.PICTURE_SIZE;
     housingImg.height = window.consts.PICTURE_SIZE;
 
+    emptyPhoto.remove();
     newDiv.appendChild(housingImg);
+    adFormPhotoContainer.appendChild(newDiv);
     loadPicture(evt, housingImg);
   };
 
@@ -48,7 +52,9 @@
 
   var resetPicture = function () {
     avatar.src = 'img/muffin-grey.svg';
-    housingPicture.innerHTML = '';
+    adFormPhotoContainer.innerHTML = '';
+    adFormPhotoContainer.appendChild(pictureFileChooser);
+    adFormPhotoContainer.appendChild(emptyPhoto);
   };
 
   avatarChooser.addEventListener('change', onAvatarLoad);
