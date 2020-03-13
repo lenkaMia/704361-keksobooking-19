@@ -38,7 +38,9 @@
     housingImg.width = window.consts.PICTURE_SIZE;
     housingImg.height = window.consts.PICTURE_SIZE;
 
-    emptyPhoto.remove();
+    if (adFormPhotoContainer.contains(emptyPhoto)) {
+      emptyPhoto.remove();
+    }
     newDiv.appendChild(housingImg);
     adFormPhotoContainer.appendChild(newDiv);
     loadPicture(evt, housingImg);
