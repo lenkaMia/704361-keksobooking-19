@@ -8,8 +8,6 @@
     x: parseInt(mapPinMain.style.left, 10),
     y: parseInt(mapPinMain.style.top, 10)
   };
-  var LOCATION_MIN_Y = 130;
-  var LOCATION_MAX_Y = 630;
 
   var closeCard = function () {
     var card = map.querySelector('.map__card');
@@ -75,7 +73,7 @@
 
     return {
       x: coords.x > mapWidth || coords.x < 0 ? mapPinMain.offsetLeft : newCoords.x,
-      y: coords.y < LOCATION_MIN_Y || coords.y > LOCATION_MAX_Y ? mapPinMain.offsetTop : newCoords.y
+      y: coords.y < window.consts.MAP_HEIGTH_MIN || coords.y > window.consts.MAP_HEIGTH_MAX ? mapPinMain.offsetTop : newCoords.y
     };
   };
 
