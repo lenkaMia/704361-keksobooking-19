@@ -7,6 +7,7 @@
   var housingGuests = mapFilters.querySelector('#housing-guests');
   var housingRooms = mapFilters.querySelector('#housing-rooms');
   var housingPrice = mapFilters.querySelector('#housing-price');
+  var defaultFilter = 'any';
   var roomPrice = {
     low: {
       min: 0,
@@ -33,11 +34,11 @@
   };
 
   var filterHousing = function (data, filterElement) {
-    return filterElement === 'any' || data === +filterElement;
+    return filterElement === defaultFilter || data === +filterElement;
   };
 
   var filterHousingType = function (data, filterElement) {
-    return filterElement === 'any' || data === filterElement;
+    return filterElement === defaultFilter || data === filterElement;
   };
 
   var filterHousingFeatures = function (data) {
@@ -49,7 +50,7 @@
   };
 
   var filterHousingPrice = function (data, filterElement) {
-    return filterElement === 'any' ? true : roomPrice[filterElement].min <= data && data < roomPrice[filterElement].max;
+    return filterElement === defaultFilter ? true : roomPrice[filterElement].min <= data && data < roomPrice[filterElement].max;
   };
 
   var activateFilters = function () {

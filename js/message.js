@@ -48,7 +48,7 @@
     };
 
     var onMessageClick = function (evt) {
-      if (evt.target.classList.contains('error__message')) {
+      if (!evt.target.classList.contains('error__message')) {
         removeMessage();
       }
     };

@@ -1,6 +1,12 @@
 'use strict';
 
 (function () {
+  var translatedTypes = {
+    palace: 'Дворец',
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом'
+  };
   var cardTemplate = document.querySelector('#card')
       .content
       .querySelector('.map__card');
@@ -54,18 +60,7 @@
   };
 
   var getTranslatedType = function (ad) {
-    switch (ad.offer.type) {
-      case 'palace':
-        return 'Дворец';
-      case 'flat':
-        return 'Квартира';
-      case 'bungalo':
-        return 'Бунгало';
-      case 'house':
-        return 'Дом';
-      default:
-        return '';
-    }
+    return translatedTypes[ad.offer.type];
   };
 
   window.generateCard = generateCard;

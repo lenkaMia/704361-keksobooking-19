@@ -14,6 +14,6 @@
     PINS_QTY: 5,
     FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
     PICTURE_SIZE: 70,
-    DEBOUNCE_INTERVAL: 300
+    DEBOUNCE_INTERVAL: 500
   };
 })();

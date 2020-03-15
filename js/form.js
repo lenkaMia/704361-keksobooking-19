@@ -15,25 +15,31 @@
   var checkOutTime = adForm.querySelector('#timeout');
   var adTime = adForm.querySelector('.ad-form__element--time');
   var adTitle = adForm.querySelector('#title');
+  var MinHousingPrice = {
+    palace: 10000,
+    flat: 1000,
+    bungalo: 0,
+    house: 5000
+  };
 
   var setMinPrice = function () {
     var currentHousingType = housingTypes.value;
     switch (currentHousingType) {
       case 'palace':
-        priceInput.min = 10000;
-        priceInput.placeholder = 10000;
+        priceInput.min = MinHousingPrice.palace;
+        priceInput.placeholder = MinHousingPrice.palace;
         break;
       case 'flat':
-        priceInput.min = 1000;
-        priceInput.placeholder = 1000;
+        priceInput.min = MinHousingPrice.flat;
+        priceInput.placeholder = MinHousingPrice.flat;
         break;
       case 'bungalo':
-        priceInput.min = 0;
-        priceInput.placeholder = 0;
+        priceInput.min = MinHousingPrice.bungalo;
+        priceInput.placeholder = MinHousingPrice.bungalo;
         break;
       case 'house':
-        priceInput.min = 5000;
-        priceInput.placeholder = 5000;
+        priceInput.min = MinHousingPrice.house;
+        priceInput.placeholder = MinHousingPrice.house;
         break;
     }
   };
