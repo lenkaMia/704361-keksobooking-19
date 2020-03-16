@@ -24,24 +24,9 @@
 
   var setMinPrice = function () {
     var currentHousingType = housingTypes.value;
-    switch (currentHousingType) {
-      case 'palace':
-        priceInput.min = MinHousingPrice.palace;
-        priceInput.placeholder = MinHousingPrice.palace;
-        break;
-      case 'flat':
-        priceInput.min = MinHousingPrice.flat;
-        priceInput.placeholder = MinHousingPrice.flat;
-        break;
-      case 'bungalo':
-        priceInput.min = MinHousingPrice.bungalo;
-        priceInput.placeholder = MinHousingPrice.bungalo;
-        break;
-      case 'house':
-        priceInput.min = MinHousingPrice.house;
-        priceInput.placeholder = MinHousingPrice.house;
-        break;
-    }
+    var currentPrice = MinHousingPrice[currentHousingType];
+    priceInput.min = currentPrice;
+    priceInput.placeholder = currentPrice;
   };
 
   var setTime = function (type, time) {
